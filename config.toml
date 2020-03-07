@@ -1,0 +1,18 @@
+# filename: config.toml
+# Banco de dados 
+[database]
+server = "projud-principal.ci1kvjyotqcl.us-east-1.rds.amazonaws.com"
+port = "3306"
+database = "projud_teste"
+user = "projud_user"
+password = "novaWD2015*"
+
+[app]
+nome="Projud Tecnologia"
+cor="#2e5dac"
+imagem="https://sistema.projud.com.br/imagens/loguinho3.png"
+icone="https://sistema.projud.com.br/favicon.ico"
+
+[output]
+directory = "./output"
+format = "toml"
