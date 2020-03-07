@@ -1,4 +1,4 @@
-package helpers
+package email
 
 import (
 	"bytes"
@@ -11,6 +11,7 @@ import (
 
 	"github.com/leekchan/accounting"
 	"gopkg.in/gomail.v2"
+	datetime "github.com/projudDev/toolkit/datetime"
 )
 
 type MailCC struct {
@@ -129,7 +130,7 @@ func (m *Mail) ParseTemplate(fileName string, data interface{}) error {
 			return template.HTML(value)
 		},
 		"FormataDataPublicacao": func(value string) string {
-			return Date2_html(Str2Date(value))
+			return datetime.Date2_html(datetime.Str2Date(value))
 		},
 	}
 
@@ -194,7 +195,7 @@ func (m *Mail) SetTemplateAttach(fileName string, data interface{}) error {
 			return template.HTML(value)
 		},
 		"FormataDataPublicacao": func(value string) string {
-			return Date2_html(Str2Date(value))
+			return datetime.Date2_html(datetime.Str2Date(value))
 		},
 	}
 

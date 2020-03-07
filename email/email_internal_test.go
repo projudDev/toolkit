@@ -1,4 +1,4 @@
-package helpers
+package email
 
 import "testing"
 import "github.com/projudDev/toolkit/driver"
