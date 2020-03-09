@@ -1,5 +1,7 @@
 package entities
 
+import "time"
+
 type Sistema struct {
 	Cod            int64
 	Descricao      string

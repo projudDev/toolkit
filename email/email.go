@@ -10,8 +10,8 @@ import (
 	"strings"
 
 	"github.com/leekchan/accounting"
-	"gopkg.in/gomail.v2"
 	datetime "github.com/projudDev/toolkit/datetime"
+	"gopkg.in/gomail.v2"
 )
 
 type MailCC struct {
