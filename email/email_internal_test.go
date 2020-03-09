@@ -5,7 +5,7 @@ import "github.com/projudDev/toolkit/driver"
 import "fmt"
 
 func TestSmtpServer(t *testing.T) {
-	db, err := driver.NewConnectioMysql()
+	db, err := driver.NewConnectionMysql()
 	if err != nil {
 		t.Error(err.Error())
 	}

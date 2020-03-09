@@ -17,7 +17,7 @@ type DB struct {
 
 var dbConn = &DB{}
 
-func NewConnectioMysql() (*DB, error) {
+func NewConnectionMysql() (*DB, error) {
 	dbSource, err := GetDBSource()
 	if err != nil {
 		return nil, err
