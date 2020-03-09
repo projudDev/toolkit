@@ -8,6 +8,7 @@ import (
 	"github.com/BurntSushi/toml"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gomodule/redigo/redis"
+	_ "github.com/lib/pq"
 )
 
 type DB struct {
@@ -18,7 +19,18 @@ type DB struct {
 var dbConn = &DB{}
 
 func NewConnectionMysql() (*DB, error) {
-	dbSource, err := GetDBSource()
+	dbSource, err := GetDBSource("mysql")
+	if err != nil {
+		return nil, err
+	}
+	url, ok := os.LookupEnv("CLEARDB_DATABASE_URL")
+	if ok {
+		return connectionMysql(url)
+	}
+	return connectionMysql(dbSource)
+}
+func NewConnectionPostgres() (*DB, error) {
+	dbSource, err := GetDBSource("postgres")
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +61,7 @@ func ConnectRedis() (*DB, error) {
 	return dbConn, nil
 }
 
-func GetDBSource() (string, error) {
+func GetDBSource(engine string) (string, error) {
 	type database struct {
 		Server   string
 		Port     string
@@ -69,13 +81,22 @@ func GetDBSource() (string, error) {
 	if _, err := toml.DecodeFile("./../config.toml", &conf); err != nil {
 		return "", err
 	}
-	dbSource := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true",
-		conf.Database.User,
-		conf.Database.Password,
-		conf.Database.Server,
-		conf.Database.Port,
-		conf.Database.Database,
-	)
+	var dbSource string
+	switch engine {
+	case "mysql":
+		dbSource = fmt.Sprintf(
+			"%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true",
+			conf.Database.User,
+			conf.Database.Password,
+			conf.Database.Server,
+			conf.Database.Port,
+			conf.Database.Database,
+		)
+	case "postgres":
+		dbSource = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+			conf.Database.Server, conf.Database.Port, conf.Database.User, conf.Database.Password, conf.Database.Database)
+	default:
+		return dbSource, fmt.Errorf("Engine not found")
+	}
 	return dbSource, nil
 }
