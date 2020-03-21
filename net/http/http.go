@@ -15,5 +15,5 @@ func SendJSON(w http.ResponseWriter, statusCode int, data interface{}) {
 }
 
 func SendError(w http.ResponseWriter, statusCode int, data interface{}) {
-	ResponseJSON(w, statusCode, data)
+	SendJSON(w, statusCode, data)
 }
