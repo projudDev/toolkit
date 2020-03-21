@@ -2,4 +2,4 @@ package toolkit
 
 
 func Teste(){
-]
+}
