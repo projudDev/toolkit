@@ -78,7 +78,7 @@ func GetDBSource(engine string) (string, error) {
 		Database database
 	}
 	var conf Config
-	if _, err := toml.DecodeFile("./../config.toml", &conf); err != nil {
+	if _, err := toml.DecodeFile("./config.toml", &conf); err != nil {
 		return "", err
 	}
 	var dbSource string
