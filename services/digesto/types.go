@@ -18,10 +18,10 @@ type UserCompany struct {
 	ProjudID          string             `json:"projud_id,omitempty"`
 	APIName           string             `json:"api_name,omitempty"` // Campo livre de até 150 caracteres. Quando fornecido, este texto é enviado em todas as chamadas web-hook desta empresa. Pode ser usado como forma de autenticação.
 	CreatedAt         *Date              `json:"created_at,omitempty"`
-	EnableModules     []string           `json:"enabled_modules,omitempty"`
+	EnabledModules    []string           `json:"enabled_modules,omitempty"`
 	ArchivedAt        *Date              `json:"archived_at,omitempty"` // Se foi excluido (nullable=True). Caso entidate tenha sido excluída, este campo tem o valor da datahora da última exclusão. Caso não esteja excluído, o valor é null. Campo somente-leitura.
 	ExpiresAt         *Date              `json:"expires_at,omitempty"`
-	ISTrial           bool               `json:"is_trial,omitempty"`
+	IsTrial           bool               `json:"is_trial,omitempty"`
 	Comment           string             `json:"comment,omitempty"`
 	AdminEmail        string             `json:"admin_email,omitempty"`
 	TrialDays         int                `json:"trial_days,omitempty"`
@@ -78,4 +78,13 @@ type Date struct {
 type EnvData struct {
 	End   EndData   `json:"end_date"`
 	Start StartData `json:"start_date"`
+}
+
+type Erro struct {
+	Message string `json:"message,omitempty"`
+	Status  int    `json:"status,omitempty"`
+}
+
+type error interface {
+	Error() string
 }

@@ -3,6 +3,8 @@ package digesto
 import "encoding/json"
 import "bytes"
 import "net/http"
+import "errors"
+import "strconv"
 
 const (
 	host = "https://op.digesto.com.br/api/"
@@ -34,6 +36,15 @@ func (this *Digesto) CreateUserCompany(ent *UserCompany) (userCompany *UserCompa
 	client := &http.Client{}
 	response, err := client.Do(req)
 	if err != nil {
+		return
+	}
+	if response.Status != "200 OK" {
+		var e Erro
+		if err = json.NewDecoder(response.Body).Decode(&e); err != nil {
+			err = errors.New("Error: Fail converting digesto error" + err.Error())
+			return
+		}
+		err = errors.New("Message: " + e.Message + " Status: " + strconv.Itoa(e.Status))
 		return
 	}
 	err = json.NewDecoder(response.Body).Decode(&userCompany)
