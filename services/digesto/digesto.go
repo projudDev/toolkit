@@ -17,7 +17,7 @@ func NewClient(ApiKey string) *Digesto {
 }
 
 func (this *Digesto) CreateUserCompany(ent *UserCompany) (userCompany *UserCompany, err error) {
-	body, err := json.Marshal(s)
+	body, err := json.Marshal(ent)
 	if err != nil {
 		return
 	}
@@ -34,5 +34,5 @@ func (this *Digesto) CreateUserCompany(ent *UserCompany) (userCompany *UserCompa
 }
 
 func (this *Digesto) CreateMonitoredPerson(ent *MonitoredPerson) (*MonitoredPerson, error) {
-
+	return nil, nil
 }
