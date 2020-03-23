@@ -1,5 +1,7 @@
 package digesto
 
+import "encoding/json"
+
 const (
 	host = "https://op.digesto.com.br/api/"
 )
