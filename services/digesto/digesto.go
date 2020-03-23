@@ -1,6 +1,8 @@
 package digesto
 
 import "encoding/json"
+import "bytes"
+import "net/http"
 
 const (
 	host = "https://op.digesto.com.br/api/"
