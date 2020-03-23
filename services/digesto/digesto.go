@@ -32,7 +32,7 @@ func (this *Digesto) CreateUserCompany(ent *UserCompany) (userCompany *UserCompa
 	req.Header.Set("Authorization", "Bearer "+this.ApiKey)
 	req.Header.Set("Content-Type", "application/json")
 	client := &http.Client{}
-	response, err := http.client.Do(req)
+	response, err := client.Do(req)
 	if err != nil {
 		return
 	}
