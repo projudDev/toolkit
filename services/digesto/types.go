@@ -14,11 +14,10 @@ type TribMonitorConfig struct {
 type UserCompany struct {
 	URI               string             `json:"$uri,omitempty"`
 	Name              string             `json:"name,omitempty"`
-	DigestoID         string             `json:"digesto_id,omitempty"`
-	ProjudID          string             `json:"projud_id,omitempty"`
 	APIName           string             `json:"api_name,omitempty"` // Campo livre de até 150 caracteres. Quando fornecido, este texto é enviado em todas as chamadas web-hook desta empresa. Pode ser usado como forma de autenticação.
 	CreatedAt         *Date              `json:"created_at,omitempty"`
 	EnabledModules    []string           `json:"enabled_modules,omitempty"`
+	IsArchived        bool               `json:"is_archived,omitempty"`
 	ArchivedAt        *Date              `json:"archived_at,omitempty"` // Se foi excluido (nullable=True). Caso entidate tenha sido excluída, este campo tem o valor da datahora da última exclusão. Caso não esteja excluído, o valor é null. Campo somente-leitura.
 	ExpiresAt         *Date              `json:"expires_at,omitempty"`
 	IsTrial           bool               `json:"is_trial,omitempty"`
@@ -28,10 +27,10 @@ type UserCompany struct {
 	TribMonitorConfig *TribMonitorConfig `json:"trib_monitor_config,omitempty"` // Dicionário JSON com regras de negócio para monitoramento em tribunais. Ver tabela abaixo. Quando não informado, copiamos o valor da empresa-mãe.
 	Users             []*User            `json:"users,omitempty"`
 	APIKey            string             `json:"api_key,omitempty"`
+	REF               string             `json:"$ref,omitempty"`
 }
 
 type MonitoredPerson struct {
-	DigestoID           string       `json:"digesto_id,omitempty"`       // ID da pessoa monitorada criada no momento da inserção
 	CNPJ                int          `json:"cnpj,omitempty"`             // Usado para encontrar processos desta parte.
 	CPF                 int          `json:"cpf,omitempty"`              // Usado para encontrar processos desta parte. Idem, CPF.
 	CreatedAT           *Date        `json:"created_at,omitempty"`       // Quando a parte foi criada
