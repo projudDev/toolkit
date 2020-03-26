@@ -1,5 +1,7 @@
 package digesto
 
+import "time"
+
 type User struct {
 	REF string `json:"$ref,omitempty"`
 }
@@ -31,8 +33,8 @@ type UserCompany struct {
 }
 
 type MonitoredPerson struct {
-	CNPJ                int          `json:"cnpj,omitempty"`             // Usado para encontrar processos desta parte.
-	CPF                 int          `json:"cpf,omitempty"`              // Usado para encontrar processos desta parte. Idem, CPF.
+	CNPJ                *int         `json:"cnpj,omitempty"`             // Usado para encontrar processos desta parte.
+	CPF                 *int         `json:"cpf,omitempty"`              // Usado para encontrar processos desta parte. Idem, CPF.
 	CreatedAT           *Date        `json:"created_at,omitempty"`       // Quando a parte foi criada
 	IsActive            bool         `json:"is_active,omitempty"`        //  Se o monitoramento desta parte está ativo.
 	ISAdvogado          bool         `json:"is_advogado,omitempty"`      // Se esta pessoa é um advogado
@@ -86,4 +88,59 @@ type Erro struct {
 
 type error interface {
 	Error() string
+}
+
+type Evento struct {
+	ID               int         `json:"id"`
+	APIName          string      `json:"api_name"`
+	TargetURL        string      `json:"target_url"`
+	SourceUserCustom interface{} `json:"source_user_custom"`
+	TargetNumber     string      `json:"target_number"`
+	EvtType          int         `json:"evt_type"`
+	CreatedAt        time.Time   `json:"created_at"`
+	SourceURL        []string    `json:"source_url"`
+	Data             interface{} `json:"data"`
+}
+
+type Processo struct {
+	RegionalCnj           bool            `json:"regional_cnj"`
+	NumeroAlternativo     interface{}     `json:"numeroAlternativo"`
+	Anexos                [][]interface{} `json:"anexos"`
+	Vara                  string          `json:"vara"`
+	Partes                [][]interface{} `json:"partes"`
+	Movs                  [][]interface{} `json:"movs"`
+	DistribuicaoTipo      string          `json:"distribuicaoTipo"`
+	SituacaoSituacaoID    int             `json:"situacao_situacaoID"`
+	Juiz                  interface{}     `json:"juiz"`
+	Area                  string          `json:"area"`
+	AssuntoExtra          interface{}     `json:"assuntoExtra"`
+	Liminar               interface{}     `json:"liminar"`
+	Audiencias            interface{}     `json:"audiencias"`
+	VaraOriginal          string          `json:"vara_original"`
+	Extinto               int             `json:"extinto"`
+	Gratuita              interface{}     `json:"gratuita"`
+	Valor                 interface{}     `json:"valor"`
+	AlteradoEm            string          `json:"alteradoEm"`
+	FonteSistema          string          `json:"fonte_sistema"`
+	Foro                  string          `json:"foro"`
+	Situacao              string          `json:"situacao"`
+	Instancia             int             `json:"instancia"`
+	ProcessosRelacionados []interface{}   `json:"processosRelacionados"`
+	Numero                string          `json:"numero"`
+	Flag                  int             `json:"flag"`
+	ComarcaCnj            string          `json:"comarca_cnj"`
+	Comarca               string          `json:"comarca"`
+	TribunalID            int             `json:"tribunalID"`
+	ForoCnj               string          `json:"foro_cnj"`
+	Tribunal              string          `json:"tribunal"`
+	ProcessoID            int             `json:"processoID"`
+	DistribuicaoData      string          `json:"distribuicaoData"`
+	SentencaData          interface{}     `json:"sentencaData"`
+	Arquivado             bool            `json:"arquivado"`
+	Classes               []interface{}   `json:"classes"`
+	Acessos               string          `json:"acessos"`
+	Uf                    string          `json:"uf"`
+	CriadoEm              string          `json:"criadoEm"`
+	ClasseNatureza        string          `json:"classeNatureza"`
+	SegredoJustica        bool
 }
