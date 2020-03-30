@@ -47,7 +47,7 @@ func NewSmtpServer(Conn *sql.DB, codSistema int64) (SmtpServer, error) {
 	}
 	localServer := LocalServer{}
 	query := "SELECT email_host, email_user, email_senha, email_tls, email_porta FROM projud_teste.sistemas WHERE Cod=?;"
-	err := Conn.QueryRow(query, codSistema).Scan(&localServer.Host, &localServer.User, &localServer.Password, &localServer.Port, &localServer.TLS)
+	err := Conn.QueryRow(query, codSistema).Scan(&localServer.Host, &localServer.User, &localServer.Password, &localServer.TLS, &localServer.Port)
 	if localServer.Host != nil {
 		Server.Host = *localServer.Host
 	}
