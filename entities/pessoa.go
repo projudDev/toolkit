@@ -1,5 +1,7 @@
 package entities
 
+import "time"
+
 type ProjudPessoa struct {
 	ID            int64      `json:"id"`
 	EscritorioID  int64      `json:"escritorio_id"`
