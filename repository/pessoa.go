@@ -44,14 +44,13 @@ func (this *mysqlProjudPessoaRepo) FindByNome(ctx context.Context, EscritorioID 
 }
 
 func (this *mysqlProjudPessoaRepo) Create(ctx context.Context, projudPessoa *entities.ProjudPessoa) (int64, error) {
-	query := "INSERT INTO clientes(cod, codesc, nome, cpf, rg, emissor, dataemissao, naturalidade, datanasc, mae, pai, obs, datacad, estadocivil, tipo, ie, endereco, numero, bairro, cep, cidade, uf, sexo, contato, ramoatividade, fone2, fone3, fone4, fone, email, site, complemento, profissao, classificacao, dataaltera, codant, datacadastro, excluido, dataexclusao, idescavador) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+	query := "INSERT INTO clientes(codesc, nome, cpf, rg, emissor, dataemissao, naturalidade, datanasc, mae, pai, obs, datacad, estadocivil, tipo, ie, endereco, numero, bairro, cep, cidade, uf, sexo, contato, ramoatividade, fone2, fone3, fone4, fone, email, site, complemento, profissao, classificacao, dataaltera, codant, datacadastro, excluido, dataexclusao, idescavador) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
 
 	stmt, err := this.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		return -1, err
 	}
 	res, err := stmt.ExecContext(ctx,
-		projudPessoa.ID,
 		projudPessoa.EscritorioID,
 		projudPessoa.Nome,
 		projudPessoa.CPF,

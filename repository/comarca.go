@@ -35,5 +35,5 @@ func (this *mysqlProjudComarcaRepo) FindComarca(ctx context.Context, orgao, trib
 	if err != nil && err == sql.ErrNoRows {
 		return nil, errors.New("Comarca não encontrada")
 	}
-	return projudPessoa, err
+	return projudComarca, err
 }

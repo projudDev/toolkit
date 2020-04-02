@@ -39,14 +39,13 @@ func (this *mysqlProjudProcessoRepo) IsExist(ctx context.Context, escritorioID i
 
 func (this *mysqlProjudProcessoRepo) Create(ctx context.Context, processo *entities.ProjudProcesso) (int64, error) {
 
-	query := "INSERT INTO processos(cod, codesc, codcli, autos, nome, comarca, vara, acao, protocolo, valorcausa, honorarios, partecontra,situacao, obs, ativo, motivoencerramento, recurso, localrecurso, litisconsorcio, advcontra, datacad, dataaltera, codprocesso, advparte, tipoprocesso, justica, tribunal, numerovara, senha, baixado, databaixa, tipoparte, tipopartecontra, codadv, dataverifand, invalido, judicial, verifand, sistema, datacadastro, excluido, dataexclusao, assunto, monitoramento, codparceiro, validocnj) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+	query := "INSERT INTO processos(codesc, codcli, autos, nome, comarca, vara, acao, protocolo, valorcausa, honorarios, partecontra,situacao, obs, ativo, motivoencerramento, recurso, localrecurso, litisconsorcio, advcontra, datacad, dataaltera, codprocesso, advparte, tipoprocesso, justica, tribunal, numerovara, senha, baixado, databaixa, tipoparte, tipopartecontra, codadv, dataverifand, invalido, judicial, verifand, sistema, datacadastro, excluido, dataexclusao, assunto, monitoramento, codparceiro, validocnj) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
 
 	stmt, err := this.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		return -1, err
 	}
 	res, err := stmt.ExecContext(ctx,
-		processo.ID,
 		processo.EscritorioID,
 		processo.ClienteID,
 		processo.Autos,
