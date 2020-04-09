@@ -1,6 +1,6 @@
 package digesto
 
-import "time"
+//import "time"
 
 type User struct {
 	REF string `json:"$ref,omitempty"`
@@ -98,7 +98,7 @@ type Evento struct {
 	SourceUserCustom interface{} `json:"source_user_custom"`
 	TargetNumber     string      `json:"target_number"`
 	EvtType          int         `json:"evt_type"`
-	CreatedAt        time.Time   `json:"created_at"`
+	CreatedAt        Date        `json:"created_at"`
 	SourceURL        []string    `json:"source_url"`
 	Data             interface{} `json:"data"`
 }
@@ -139,9 +139,13 @@ type Processo struct {
 	SentencaData          interface{}     `json:"sentencaData"`
 	Arquivado             bool            `json:"arquivado"`
 	Classes               []interface{}   `json:"classes"`
-	Acessos               string          `json:"acessos"`
+	Acessos               interface{}     `json:"acessos"`
 	Uf                    string          `json:"uf"`
 	CriadoEm              string          `json:"criadoEm"`
 	ClasseNatureza        string          `json:"classeNatureza"`
 	SegredoJustica        bool
+}
+
+type EventoErro struct {
+	Reason string `json:"reason"`
 }

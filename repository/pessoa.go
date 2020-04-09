@@ -31,7 +31,7 @@ func (this *mysqlProjudPessoaRepo) GetMaxID(ctx context.Context) (ID int64, err 
 
 func (this *mysqlProjudPessoaRepo) FindByNome(ctx context.Context, EscritorioID int64, nome string) (*entities.ProjudPessoa, error) {
 	projudPessoa := new(entities.ProjudPessoa)
-	query := "SELECT cod, codesc, nome FROM clientes WHERE codesc=? and nome=?;"
+	query := "SELECT cod, codesc, nome FROM projud_dados.clientes WHERE codesc=? and nome=?;"
 	err := this.Conn.QueryRowContext(ctx, query, EscritorioID, nome).Scan(
 		&projudPessoa.ID,
 		&projudPessoa.EscritorioID,
@@ -44,7 +44,7 @@ func (this *mysqlProjudPessoaRepo) FindByNome(ctx context.Context, EscritorioID 
 }
 
 func (this *mysqlProjudPessoaRepo) Create(ctx context.Context, projudPessoa *entities.ProjudPessoa) (int64, error) {
-	query := "INSERT INTO clientes(codesc, nome, cpf, rg, emissor, dataemissao, naturalidade, datanasc, mae, pai, obs, datacad, estadocivil, tipo, ie, endereco, numero, bairro, cep, cidade, uf, sexo, contato, ramoatividade, fone2, fone3, fone4, fone, email, site, complemento, profissao, classificacao, dataaltera, codant, datacadastro, excluido, dataexclusao, idescavador) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+	query := "INSERT INTO projud_dados.clientes(codesc, nome, cpf, rg, emissor, dataemissao, naturalidade, datanasc, mae, pai, obs, datacad, estadocivil, tipo, ie, endereco, numero, bairro, cep, cidade, uf, sexo, contato, ramoatividade, fone2, fone3, fone4, fone, email, site, complemento, profissao, classificacao, dataaltera, codant, datacadastro, excluido, dataexclusao, idescavador) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
 
 	stmt, err := this.Conn.PrepareContext(ctx, query)
 	if err != nil {

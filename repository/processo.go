@@ -13,6 +13,7 @@ type ProjudProcessoRepo interface {
 	IsExist(ctx context.Context, escritorioID int64, autos string) (existe bool, err error)
 	SetClienteID(ctx context.Context, processoID, clienteID int64) error
 	GetMaxID(ctx context.Context) (ID int64, err error)
+	SetClienteNome(ctx context.Context, processoID int64, nome string) error
 }
 
 func NewMySQLProjudProcessoRepo(Conn *sql.DB) ProjudProcessoRepo {
@@ -31,7 +32,7 @@ func (this *mysqlProjudProcessoRepo) GetMaxID(ctx context.Context) (ID int64, er
 }
 
 func (this *mysqlProjudProcessoRepo) IsExist(ctx context.Context, escritorioID int64, autos string) (existe bool, err error) {
-	query := "SELECT IF(COUNT(*),'true','false') FROM processos WHERE codesc=? and autos=?"
+	query := "SELECT IF(COUNT(*),'true','false') FROM projud_dados.processos WHERE codesc=? and autos=?"
 	row := this.Conn.QueryRowContext(ctx, query, escritorioID, autos)
 	err = row.Scan(&existe)
 	return
@@ -39,7 +40,7 @@ func (this *mysqlProjudProcessoRepo) IsExist(ctx context.Context, escritorioID i
 
 func (this *mysqlProjudProcessoRepo) Create(ctx context.Context, processo *entities.ProjudProcesso) (int64, error) {
 
-	query := "INSERT INTO processos(codesc, codcli, autos, nome, comarca, vara, acao, protocolo, valorcausa, honorarios, partecontra,situacao, obs, ativo, motivoencerramento, recurso, localrecurso, litisconsorcio, advcontra, datacad, dataaltera, codprocesso, advparte, tipoprocesso, justica, tribunal, numerovara, senha, baixado, databaixa, tipoparte, tipopartecontra, codadv, dataverifand, invalido, judicial, verifand, sistema, datacadastro, excluido, dataexclusao, assunto, monitoramento, codparceiro, validocnj) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+	query := "INSERT INTO projud_dados.processos(codesc, codcli, autos, nome, comarca, vara, acao, protocolo, valorcausa, honorarios, partecontra,situacao, obs, ativo, motivoencerramento, recurso, localrecurso, litisconsorcio, advcontra, datacad, dataaltera, codprocesso, advparte, tipoprocesso, justica, tribunal, numerovara, senha, baixado, databaixa, tipoparte, tipopartecontra, codadv, dataverifand, invalido, judicial, verifand, sistema, datacadastro, excluido, dataexclusao, assunto, monitoramento, codparceiro, validocnj) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
 
 	stmt, err := this.Conn.PrepareContext(ctx, query)
 	if err != nil {
@@ -107,6 +108,22 @@ func (this *mysqlProjudProcessoRepo) SetClienteID(ctx context.Context, processoI
 		return err
 	}
 	res, err := stmt.ExecContext(ctx, clienteID, processoID)
+	if err != nil {
+		return err
+	}
+	if numRols, _ := res.RowsAffected(); numRols == 0 {
+		return errors.New("Nenhum registro afetado, verifique o cod")
+	}
+	return nil
+}
+
+func (this *mysqlProjudProcessoRepo) SetClienteNome(ctx context.Context, processoID int64, nome string) error {
+	query := "UPDATE processos SET nome=? WHERE cod=?"
+	stmt, err := this.Conn.PrepareContext(ctx, query)
+	if err != nil {
+		return err
+	}
+	res, err := stmt.ExecContext(ctx, nome, processoID)
 	if err != nil {
 		return err
 	}
