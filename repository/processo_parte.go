@@ -35,5 +35,6 @@ func (this *mysqlProjudProcessoParteRepo) Create(ctx context.Context, processoPa
 	}
 
 	defer stmt.Close()
+
 	return res.LastInsertId()
 }

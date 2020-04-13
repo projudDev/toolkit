@@ -102,7 +102,7 @@ func (this *mysqlProjudProcessoRepo) Create(ctx context.Context, processo *entit
 }
 
 func (this *mysqlProjudProcessoRepo) SetClienteID(ctx context.Context, processoID, clienteID int64) error {
-	query := "UPDATE processos SET codcli=? WHERE cod=?"
+	query := "UPDATE projud_dados.processos SET codcli=? WHERE cod=?"
 	stmt, err := this.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		return err
@@ -118,7 +118,7 @@ func (this *mysqlProjudProcessoRepo) SetClienteID(ctx context.Context, processoI
 }
 
 func (this *mysqlProjudProcessoRepo) SetClienteNome(ctx context.Context, processoID int64, nome string) error {
-	query := "UPDATE processos SET nome=? WHERE cod=?"
+	query := "UPDATE projud_dados.processos SET nome=? WHERE cod=?"
 	stmt, err := this.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		return err

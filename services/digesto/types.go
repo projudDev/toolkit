@@ -98,7 +98,6 @@ type Evento struct {
 	SourceUserCustom interface{} `json:"source_user_custom"`
 	TargetNumber     string      `json:"target_number"`
 	EvtType          int         `json:"evt_type"`
-	CreatedAt        Date        `json:"created_at"`
 	SourceURL        []string    `json:"source_url"`
 	Data             interface{} `json:"data"`
 }
