@@ -93,6 +93,7 @@ type error interface {
 
 type Evento struct {
 	ID               int         `json:"id"`
+	URI              string      `json:"$uri"`
 	APIName          string      `json:"api_name"`
 	TargetURL        string      `json:"target_url"`
 	SourceUserCustom interface{} `json:"source_user_custom"`
