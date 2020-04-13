@@ -1,12 +1,12 @@
 package logger
 
 import (
+	"crypto/tls"
 	"fmt"
 	"github.com/projudDev/toolkit/net"
 	"log"
-	"runtime"
-	"crypto/tls"
 	"net/http"
+	"runtime"
 )
 
 func Error(err error) {
@@ -20,7 +20,7 @@ func ProductError(productID int64, err error) (b bool) {
 	if err != nil {
 		ip, _ := net.ExternalIP()
 		pc, fn, line, _ := runtime.Caller(1)
-		description := fmt.Sprintf("at=[error] product=[%v] ip[%s] module=[%s] path=[%s:%d] description=[%v]", productID, ip, runtime.FuncForPC(pc).Name(), fn, line, err)
+		description := fmt.Sprintf("at=[error] product=[%v] ip=[%s] module=[%s] path=[%s:%d] description=[%v]", productID, ip, runtime.FuncForPC(pc).Name(), fn, line, err)
 		log.Printf(description)
 		SendToTelegram(description)
 		b = true
