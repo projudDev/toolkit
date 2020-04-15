@@ -1,14 +1,14 @@
 package driver
 
 import (
-	"fmt"
-	"os"
-
 	"database/sql"
+	"fmt"
 	"github.com/BurntSushi/toml"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gomodule/redigo/redis"
 	_ "github.com/lib/pq"
+	"os"
+	"time"
 )
 
 type DB struct {
@@ -45,6 +45,7 @@ func connectionMysql(url string) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	d.SetConnMaxLifetime(time.Minute * 5)
 	dbConn.SQL = d
 	return dbConn, err
 }
