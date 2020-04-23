@@ -1,5 +1,4 @@
 package toolkit
 
-
-func Teste(){
+func Teste() {
 }

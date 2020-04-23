@@ -20,7 +20,7 @@ type mysqlProjudProcessoAdvogadpoRepo struct {
 }
 
 func (this *mysqlProjudProcessoAdvogadpoRepo) Create(ctx context.Context, processoAdvogado *entities.ProjudProcessoAdvogado) (int64, error) {
-	query := "INSERT INTO projud_dados.processospartes(codcli, codproc, polo) values (?,?,?);"
+	query := "INSERT INTO projud_dados.processosadvogados(codadv, codproc, polo) values (?,?,?);"
 
 	stmt, err := this.Conn.PrepareContext(ctx, query)
 	if err != nil {

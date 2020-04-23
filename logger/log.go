@@ -28,6 +28,10 @@ func ProductError(productID int64, err error) (b bool) {
 	return
 }
 
+func MarkDowError(err error) {
+	SendToTelegram(err.Error())
+}
+
 func SendToTelegram(description string) {
 	URL := "https://api.telegram.org/bot708536877:AAEtR-PxVPhiH1OhLj6w43O2EFXuDiGespg/sendMessage?chat_id=-288258884&text=" + description
 	tr := &http.Transport{
