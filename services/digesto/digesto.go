@@ -5,6 +5,7 @@ import "bytes"
 import "net/http"
 import "errors"
 import "strconv"
+import "fmt"
 
 const (
 	host = "https://op.digesto.com.br/api"
@@ -137,6 +138,8 @@ func (this *Digesto) CreateMonitoredPerson(ent *MonitoredPerson) (monitoredPerso
 	if err != nil {
 		return
 	}
+	fmt.Println("CreateMonitoredPerson ->", string(body))
+
 	req, err := http.NewRequest("POST", this.Host+"/monitored_person", bytes.NewReader(body))
 	if err != nil {
 		return

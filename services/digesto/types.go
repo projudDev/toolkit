@@ -57,7 +57,7 @@ type MonitoredPerson struct {
 	UserCustom          string       `json:"user_custom,omitempty"`      // Usado para encontrar processos desta parte. Papel da parte no processo: 0: polo qualquer (default); 1: autor; 2: co-autor 3: réu; 4: neutro
 	DistribuidoFrom     string       `json:"distribuido_from,omitempty"` // Usado para encontrar processos desta parte. Papel da parte no processo: 0: polo qualquer (default); 1: autor; 2: co-autor 3: réu; 4: neutro
 	URI                 string       `json:"$uri,omitempty"`
-	IsMonitoredAnexos   bool         `json:"is_monitored_anexos,omitempty"`
+	IsMonitoredAnexos   *bool        `json:"is_monitored_anexos"`
 	UserCompany         *UserCompany `json:"user_company,omitempty"`
 }
 
@@ -116,7 +116,7 @@ type Processo struct {
 	Area                  string          `json:"area"`
 	AssuntoExtra          interface{}     `json:"assuntoExtra"`
 	Liminar               interface{}     `json:"liminar"`
-	Audiencias            interface{}     `json:"audiencias"`
+	Audiencias            [][]interface{} `json:"audiencias"`
 	VaraOriginal          string          `json:"vara_original"`
 	Extinto               int             `json:"extinto"`
 	Gratuita              interface{}     `json:"gratuita"`

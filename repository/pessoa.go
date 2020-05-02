@@ -31,11 +31,13 @@ func (this *mysqlProjudPessoaRepo) GetMaxID(ctx context.Context) (ID int64, err 
 
 func (this *mysqlProjudPessoaRepo) FindByNome(ctx context.Context, EscritorioID int64, nome string) (*entities.ProjudPessoa, error) {
 	projudPessoa := new(entities.ProjudPessoa)
-	query := "SELECT cod, codesc, nome FROM projud_dados.clientes WHERE codesc=? and nome=?;"
+	query := "SELECT cod, codesc, nome, tipo, classificacao FROM projud_dados.clientes WHERE codesc=? and nome=?;"
 	err := this.Conn.QueryRowContext(ctx, query, EscritorioID, nome).Scan(
 		&projudPessoa.ID,
 		&projudPessoa.EscritorioID,
 		&projudPessoa.Nome,
+		&projudPessoa.Tipo,
+		&projudPessoa.Classificacao,
 	)
 	if err != nil && err == sql.ErrNoRows {
 		return nil, errors.New("Pessoa não encontrada")

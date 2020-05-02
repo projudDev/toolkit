@@ -14,6 +14,10 @@ type ProjudProcessoRepo interface {
 	SetClienteID(ctx context.Context, processoID, clienteID int64) error
 	GetMaxID(ctx context.Context) (ID int64, err error)
 	SetClienteNome(ctx context.Context, processoID int64, nome string) error
+	SetCliente(ctx context.Context, processoID, clienteID int64, clienteNome string, tipoParte int) error
+	SetParteContraria(ctx context.Context, processoID int64, clienteNome string, tipoParte int) error
+	SetAdvogadoIds(ctx context.Context, processoID int64, ids string) error
+	SetAdvogadoNomes(ctx context.Context, processoID int64, nomes string) error
 }
 
 func NewMySQLProjudProcessoRepo(Conn *sql.DB) ProjudProcessoRepo {
@@ -100,6 +104,21 @@ func (this *mysqlProjudProcessoRepo) Create(ctx context.Context, processo *entit
 	defer stmt.Close()
 	return res.LastInsertId()
 }
+func (this *mysqlProjudProcessoRepo) SetCliente(ctx context.Context, processoID, clienteID int64, clienteNome string, tipoParte int) error {
+	query := "UPDATE projud_dados.processos SET codcli=?, nome=?, tipoparte=?  WHERE cod=?"
+	stmt, err := this.Conn.PrepareContext(ctx, query)
+	if err != nil {
+		return err
+	}
+	res, err := stmt.ExecContext(ctx, clienteID, clienteNome, tipoParte, processoID)
+	if err != nil {
+		return err
+	}
+	if numRols, _ := res.RowsAffected(); numRols == 0 {
+		return errors.New("Nenhum registro afetado, verifique o cod")
+	}
+	return nil
+}
 
 func (this *mysqlProjudProcessoRepo) SetClienteID(ctx context.Context, processoID, clienteID int64) error {
 	query := "UPDATE projud_dados.processos SET codcli=? WHERE cod=?"
@@ -124,6 +143,54 @@ func (this *mysqlProjudProcessoRepo) SetClienteNome(ctx context.Context, process
 		return err
 	}
 	res, err := stmt.ExecContext(ctx, nome, processoID)
+	if err != nil {
+		return err
+	}
+	if numRols, _ := res.RowsAffected(); numRols == 0 {
+		return errors.New("Nenhum registro afetado, verifique o cod")
+	}
+	return nil
+}
+
+func (this *mysqlProjudProcessoRepo) SetParteContraria(ctx context.Context, processoID int64, clienteNome string, tipoParte int) error {
+	query := "UPDATE projud_dados.processos SET partecontra=?, tipopartecontra=? WHERE cod=?"
+	stmt, err := this.Conn.PrepareContext(ctx, query)
+	if err != nil {
+		return err
+	}
+	res, err := stmt.ExecContext(ctx, clienteNome, tipoParte, processoID)
+	if err != nil {
+		return err
+	}
+	if numRols, _ := res.RowsAffected(); numRols == 0 {
+		return errors.New("Nenhum registro afetado, verifique o cod")
+	}
+	return nil
+}
+
+func (this *mysqlProjudProcessoRepo) SetAdvogadoIds(ctx context.Context, processoID int64, ids string) error {
+	query := "UPDATE projud_dados.processos SET codadv=? WHERE cod=?"
+	stmt, err := this.Conn.PrepareContext(ctx, query)
+	if err != nil {
+		return err
+	}
+	res, err := stmt.ExecContext(ctx, ids, processoID)
+	if err != nil {
+		return err
+	}
+	if numRols, _ := res.RowsAffected(); numRols == 0 {
+		return errors.New("Nenhum registro afetado, verifique o cod")
+	}
+	return nil
+}
+
+func (this *mysqlProjudProcessoRepo) SetAdvogadoNomes(ctx context.Context, processoID int64, nomes string) error {
+	query := "UPDATE projud_dados.processos SET AdvParte=? WHERE cod=?"
+	stmt, err := this.Conn.PrepareContext(ctx, query)
+	if err != nil {
+		return err
+	}
+	res, err := stmt.ExecContext(ctx, nomes, processoID)
 	if err != nil {
 		return err
 	}
